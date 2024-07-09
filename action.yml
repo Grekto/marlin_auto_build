@@ -23,7 +23,7 @@ runs:
         token: ${{ inputs.token }}
     - uses: actions/checkout@v2.7.0
       with:
-        repository: 'Grekto/marlin_auto_build'
+        repository: 'zisismaras/marlin_auto_build'
         path: 'marlin_auto_build'
         persist-credentials: false
     - uses: actions/setup-node@v2
@@ -44,6 +44,11 @@ runs:
         GITHUB_TOKEN: ${{ inputs.token }}
         GITHUB_REPOSITORY: ${{ inputs.repository }}
         GITHUB_ACTOR: ${{ inputs.actor }}
+    - name: Upload firmware artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: firmware-bin
+        path: marlin_auto_build/dist/assets/*.bin
     - run: |
         rm -rf marlin_auto_build
         if [ -n "$(git status --porcelain)" ]; then
